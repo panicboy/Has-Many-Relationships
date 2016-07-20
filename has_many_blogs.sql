@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+CREATE INDEX users_inx ON users (first_name, last_name, created_at);
 
 DROP TABLE IF EXISTS posts;
 CREATE TABLE IF NOT EXISTS posts
@@ -32,6 +33,7 @@ CREATE TABLE IF NOT EXISTS posts
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   user_id INTEGER REFERENCES users(id)
 );
+CREATE INDEX posts_inx ON posts (created_at, content);
 
 DROP TABLE IF EXISTS comments;
 CREATE TABLE IF NOT EXISTS comments
@@ -43,6 +45,7 @@ CREATE TABLE IF NOT EXISTS comments
   user_id INTEGER REFERENCES users(id),
   post_id INTEGER REFERENCES posts(id)
 );
+CREATE INDEX comments_inx ON comments (created_at, body);
 
 \i scripts/blog_data.sql
 
